@@ -89,6 +89,21 @@ public class SolicitorStatementOfTruthPaySubmit implements CCDConfig<CaseData, S
             .build();
     }
 
+    public AboutToStartOrSubmitResponse<CaseData, State> aboutToSubmit(
+        final CaseDetails<CaseData, State> caseDetails,
+        final CaseDetails<CaseData, State> caseDetailsBefore
+    ) {
+
+        log.info("Submit petition about to submit callback invoked");
+
+        log.info("Invoking PBA Payments");
+
+
+        return AboutToStartOrSubmitResponse.<CaseData, State>builder()
+            //.data(caseData)
+            .build();
+    }
+
     private FieldCollectionBuilder<CaseData, State, EventBuilder<CaseData, UserRole, State>> addEventConfig(
         final ConfigBuilder<CaseData, State, UserRole> configBuilder) {
 
@@ -100,6 +115,7 @@ public class SolicitorStatementOfTruthPaySubmit implements CCDConfig<CaseData, S
             .showSummary()
             .endButtonLabel("Submit Petition")
             .aboutToStartCallback(this::aboutToStart)
+            .aboutToSubmitCallback(this::aboutToSubmit)
             .explicitGrants()
             .grant(CREATE_READ_UPDATE, CASEWORKER_DIVORCE_SOLICITOR)
             .grant(READ,
