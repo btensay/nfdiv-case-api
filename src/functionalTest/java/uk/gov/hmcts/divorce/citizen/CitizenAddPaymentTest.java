@@ -32,7 +32,7 @@ public class CitizenAddPaymentTest extends FunctionalTestSuite {
     @Test
     public void shouldPassValidationAndGiveSuccessWhenCaseDataValid() throws IOException {
         Map<String, Object> request = caseData(REQUEST);
-        Response response = triggerCallback(request, CITIZEN_ADD_PAYMENT, ABOUT_TO_SUBMIT_URL);
+        Response response = triggerCallbackAsCitizen(request, CITIZEN_ADD_PAYMENT, ABOUT_TO_SUBMIT_URL);
 
         assertThat(response.getStatusCode()).isEqualTo(OK.value());
 
@@ -44,7 +44,7 @@ public class CitizenAddPaymentTest extends FunctionalTestSuite {
     @Test
     public void shouldPassValidationAndGiveSuccessWhenCaseDataValidAndAwaitingDocument() throws IOException {
         Map<String, Object> request = caseData(AWAITING_DOCUMENTS_REQUEST);
-        Response response = triggerCallback(request, CITIZEN_ADD_PAYMENT, ABOUT_TO_SUBMIT_URL);
+        Response response = triggerCallbackAsCitizen(request, CITIZEN_ADD_PAYMENT, ABOUT_TO_SUBMIT_URL);
 
         assertThat(response.getStatusCode()).isEqualTo(OK.value());
 

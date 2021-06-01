@@ -14,7 +14,7 @@ import uk.gov.hmcts.divorce.common.config.WebMvcConfig;
 import uk.gov.hmcts.divorce.common.config.interceptors.RequestInterceptor;
 import uk.gov.hmcts.divorce.notification.NotificationService;
 import uk.gov.hmcts.divorce.notification.exception.NotificationException;
-import uk.gov.hmcts.divorce.payment.FeesAndPaymentsClient;
+import uk.gov.hmcts.divorce.payment.FeesClient;
 import uk.gov.service.notify.NotificationClientException;
 
 import static org.mockito.ArgumentMatchers.anyMap;
@@ -62,7 +62,7 @@ public class CitizenSaveAndCloseTest {
     private WebMvcConfig webMvcConfig;
 
     @MockBean
-    private FeesAndPaymentsClient feesAndPaymentsClient;
+    private FeesClient feesClient;
 
     @Test
     public void givenValidCaseDataWhenCallbackIsInvokedThenSendEmail() throws Exception {

@@ -9,7 +9,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
-import uk.gov.hmcts.divorce.payment.FeesAndPaymentsClient;
+import uk.gov.hmcts.divorce.payment.FeesClient;
 import uk.gov.hmcts.reform.authorisation.exceptions.InvalidTokenException;
 import uk.gov.hmcts.reform.authorisation.validators.AuthTokenValidator;
 
@@ -42,7 +42,7 @@ public class RequestInterceptorTest {
     private AuthTokenValidator validator;
 
     @MockBean
-    private FeesAndPaymentsClient feesAndPaymentsClient;
+    private FeesClient feesClient;
 
     @Test
     public void shouldReturn401WhenAuthTokenIsInvalid() throws Exception {

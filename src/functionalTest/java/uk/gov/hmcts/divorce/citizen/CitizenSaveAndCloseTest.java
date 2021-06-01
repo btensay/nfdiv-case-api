@@ -22,7 +22,7 @@ public class CitizenSaveAndCloseTest extends FunctionalTestSuite {
     @Test
     public void shouldSendEmailWhenAllTemplateParamsAreValid() throws IOException {
         Map<String, Object> request = caseData(REQUEST);
-        Response response = triggerCallback(request, CITIZEN_SAVE_AND_CLOSE, SUBMITTED_URL);
+        Response response = triggerCallbackAsCitizen(request, CITIZEN_SAVE_AND_CLOSE, SUBMITTED_URL);
 
         assertThat(response.getStatusCode()).isEqualTo(OK.value());
     }
@@ -31,7 +31,7 @@ public class CitizenSaveAndCloseTest extends FunctionalTestSuite {
     public void shouldSendWelshEmailWhenAllTemplateParamsAreValid() throws IOException {
         Map<String, Object> request = caseData(REQUEST);
         request.put("languagePreferenceWelsh", "YES");
-        Response response = triggerCallback(request, CITIZEN_SAVE_AND_CLOSE, SUBMITTED_URL);
+        Response response = triggerCallbackAsCitizen(request, CITIZEN_SAVE_AND_CLOSE, SUBMITTED_URL);
 
         assertThat(response.getStatusCode()).isEqualTo(OK.value());
     }

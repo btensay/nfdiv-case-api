@@ -28,7 +28,7 @@ public class SolicitorUpdateApplicationTest extends FunctionalTestSuite {
         final Map<String, Object> caseData = caseData(REQUEST);
         caseData.put("applicant2OrgContactInformation", organisationContactInformation());
 
-        final Response response = triggerCallback(caseData, SOLICITOR_UPDATE, ABOUT_TO_SUBMIT_URL);
+        final Response response = triggerCallbackAsSolicitor(caseData, SOLICITOR_UPDATE, ABOUT_TO_SUBMIT_URL);
 
         assertThat(response.getStatusCode()).isEqualTo(OK.value());
 

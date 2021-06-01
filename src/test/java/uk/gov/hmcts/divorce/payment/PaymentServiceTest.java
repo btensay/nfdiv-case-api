@@ -34,7 +34,7 @@ import static uk.gov.hmcts.divorce.testutil.TestDataHelper.getFeeResponse;
 public class PaymentServiceTest {
 
     @Mock
-    private FeesAndPaymentsClient feesAndPaymentsClient;
+    private FeesClient feesClient;
 
     @InjectMocks
     private PaymentService paymentService;
@@ -42,7 +42,7 @@ public class PaymentServiceTest {
     @Test
     public void shouldReturnOrderSummaryWhenFeeEventIsAvailable() {
         doReturn(getFeeResponse())
-            .when(feesAndPaymentsClient)
+            .when(feesClient)
             .getApplicationIssueFee(
                 anyString(),
                 anyString(),
@@ -61,7 +61,7 @@ public class PaymentServiceTest {
             .contains(tuple(ISSUE_FEE, "1", FEE_CODE, "1000")
             );
 
-        verify(feesAndPaymentsClient)
+        verify(feesClient)
             .getApplicationIssueFee(
                 anyString(),
                 anyString(),
@@ -71,7 +71,7 @@ public class PaymentServiceTest {
                 isNull()
             );
 
-        verifyNoMoreInteractions(feesAndPaymentsClient);
+        verifyNoMoreInteractions(feesClient);
     }
 
     @Test
@@ -90,7 +90,7 @@ public class PaymentServiceTest {
         );
 
         doThrow(feignException)
-            .when(feesAndPaymentsClient)
+            .when(feesClient)
             .getApplicationIssueFee(
                 anyString(),
                 anyString(),

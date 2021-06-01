@@ -47,7 +47,7 @@ public class SolicitorMidEventCallbackTest extends FunctionalTestSuite {
         caseData.put(FINANCIAL_ORDER, NO);
         caseData.put(APPLICANT_1_ORGANISATION_POLICY, organisationPolicy());
 
-        Response response = triggerCallback(caseData, eventId, midEventUrl);
+        Response response = triggerCallbackAsSolicitor(caseData, eventId, midEventUrl);
 
         assertThat(response.getStatusCode()).isEqualTo(OK.value());
 

@@ -15,10 +15,12 @@ import uk.gov.hmcts.divorce.common.model.UserRole;
 import uk.gov.hmcts.divorce.payment.PaymentService;
 import uk.gov.hmcts.divorce.payment.model.Payment;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.UUID;
 
 import static java.util.Collections.singletonList;
+import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static uk.gov.hmcts.divorce.common.model.State.AwaitingPayment;
 import static uk.gov.hmcts.divorce.common.model.State.Draft;
 import static uk.gov.hmcts.divorce.common.model.UserRole.CASEWORKER_DIVORCE_SUPERUSER;
@@ -35,6 +37,9 @@ public class CitizenSubmitApplication implements CCDConfig<CaseData, State, User
 
     @Autowired
     private PaymentService paymentService;
+
+    @Autowired
+    private HttpServletRequest httpServletRequest;
 
     @Override
     public void configure(ConfigBuilder<CaseData, State, UserRole> configBuilder) {
@@ -58,7 +63,7 @@ public class CitizenSubmitApplication implements CCDConfig<CaseData, State, User
         OrderSummary orderSummary = paymentService.getOrderSummary();
         caseDataCopy.setApplicationFeeOrderSummary(orderSummary);
 
-        ListValue<Payment> paymentListValue = createPendingPayment(orderSummary.getPaymentTotal());
+        ListValue<Payment> paymentListValue = createPendingPayment(caseDataCopy, details.getId());
         caseDataCopy.setPayments(singletonList(paymentListValue));
 
         log.info("Validating case data");
@@ -82,12 +87,8 @@ public class CitizenSubmitApplication implements CCDConfig<CaseData, State, User
             .build();
     }
 
-    private ListValue<Payment> createPendingPayment(String paymentTotal) {
-        Payment payment = Payment
-            .builder()
-            .paymentAmount(Integer.valueOf(paymentTotal))
-            .paymentStatus(IN_PROGRESS)
-            .build();
+    private ListValue<Payment> createPendingPayment(CaseData data, Long id) {
+        Payment payment = paymentService.startCardPayment(data, id, httpServletRequest.getHeader(AUTHORIZATION));
 
         return ListValue
             .<Payment>builder()

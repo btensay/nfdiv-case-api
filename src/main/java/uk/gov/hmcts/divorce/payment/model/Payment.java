@@ -14,12 +14,14 @@ import java.time.LocalDate;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+// todo: remove payment prefix from properties
 public class Payment {
 
     @CCD(
         label = "Payment Date"
     )
     @JsonFormat(pattern = "yyyy-MM-dd")
+    // todo: datetime, plus updated datetime
     private LocalDate paymentDate;
 
     @CCD(

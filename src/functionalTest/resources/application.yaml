@@ -17,6 +17,10 @@ uk:
       api:
         key: dummy
         baseUrl: https://api.notifications.service.gov.uk
+      email:
+        templateVars:
+          signInDivorceUrl: ""
+          signInDissolutionUrl: ""
 
 s2s:
  name: ccd_data
@@ -28,6 +32,9 @@ idam:
     url: ${TEST_S2S_URL:http://rpe-service-auth-provider-aat.service.core-compute-aat.internal}
     secret: ${S2S_SECRET:dummy}
     microservice: divorce
+  citizen:
+    username: ${IDAM_CITIZEN_USERNAME:dummycitizen@test.com}
+    password: ${IDAM_CITIZEN_PASSWORD:dummy}
   solicitor:
     username: ${IDAM_SOLICITOR_USERNAME:dummysolicitor@test.com}
     password: ${IDAM_SOLICITOR_PASSWORD:dummy}
@@ -45,6 +52,10 @@ s2s-authorised:
 fee:
   api:
     baseUrl: ${FEE_API_URL:http://fees-register-api-aat.service.core-compute-aat.internal}
+
+payments:
+  api:
+    url: ${PAYMENTS_API_URL:http://payment-api-aat.service.core-compute-aat.internal}
 
 core_case_data:
   api:

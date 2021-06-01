@@ -13,7 +13,6 @@ import uk.gov.hmcts.reform.ccd.client.model.Event;
 import uk.gov.hmcts.reform.ccd.client.model.StartEventResponse;
 import uk.gov.hmcts.reform.idam.client.IdamClient;
 
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Map;
 
@@ -46,6 +45,12 @@ public abstract class FunctionalTestSuite {
     @Value("${idam.solicitor.password}")
     protected String solicitorPassword;
 
+    @Value("${idam.citizen.username}")
+    protected String citizenUsername;
+
+    @Value("${idam.citizen.password}")
+    protected String citizenPassword;
+
     @Autowired
     private IdamClient idamClient;
 
@@ -68,10 +73,13 @@ public abstract class FunctionalTestSuite {
         return "Bearer " + response.getBody().asString();
     }
 
-    protected String generateIdamTokenForSolicitor() {
+    public String generateIdamTokenForSolicitor() {
         return idamClient.getAccessToken(solicitorUsername, solicitorPassword);
     }
 
+    public String generateIdamTokenForCitizen() {
+        return idamClient.getAccessToken(citizenUsername, citizenPassword);
+    }
 
     protected CaseDetails createCaseInCcd() {
         String solicitorToken = generateIdamTokenForSolicitor();
@@ -132,7 +140,19 @@ public abstract class FunctionalTestSuite {
         );
     }
 
-    protected Response triggerCallback(Map<String, Object> caseData, String eventId, String url) throws IOException {
+    protected Response triggerCallbackAsCitizen(Map<String, Object> caseData, String eventId, String url) {
+        return triggerCallback(caseData, eventId, url, generateIdamTokenForCitizen());
+    }
+
+    protected Response triggerCallbackAsSolicitor(Map<String, Object> caseData, String eventId, String url) {
+        return triggerCallback(caseData, eventId, url, generateIdamTokenForSolicitor());
+    }
+
+    protected Response triggerCallbackAsSolicitor(CallbackRequest request, String url) {
+        return triggerCallback(request, url, generateIdamTokenForSolicitor());
+    }
+
+    private Response triggerCallback(Map<String, Object> caseData, String eventId, String url, String auth) {
         CallbackRequest request = CallbackRequest
             .builder()
             .eventId(eventId)
@@ -146,17 +166,17 @@ public abstract class FunctionalTestSuite {
             )
             .build();
 
-        return triggerCallback(request, url);
+        return triggerCallback(request, url, auth);
     }
 
-    protected Response triggerCallback(CallbackRequest request, String url) throws IOException {
+    private Response triggerCallback(CallbackRequest request, String url, String auth) {
         return RestAssured
             .given()
             .relaxedHTTPSValidation()
             .baseUri(testUrl)
             .header(CONTENT_TYPE, APPLICATION_JSON_VALUE)
             .header(SERVICE_AUTHORIZATION, generateServiceAuthTokenFor(s2sName))
-            .header(AUTHORIZATION, generateIdamTokenForSolicitor())
+            .header(AUTHORIZATION, auth)
             .body(request)
             .when()
             .post(url);

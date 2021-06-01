@@ -185,6 +185,7 @@ dependencyManagement {
 repositories {
   mavenLocal()
   mavenCentral()
+  maven { url 'https://jitpack.io' }
 }
 
 def versions = [
@@ -242,6 +243,7 @@ dependencies {
   implementation group: 'uk.gov.hmcts.reform', name: 'logging', version: versions.reformsJavaLogging
   implementation group: 'uk.gov.hmcts.reform', name: 'logging-appinsights', version: versions.reformsJavaLogging
   implementation group: 'uk.gov.hmcts.reform', name: 'logging-spring', version: versions.reformsJavaLogging
+  implementation group: 'com.github.hmcts', name: 'payments-java-client', version: '1.0.1'
 
   implementation group: 'uk.gov.hmcts.reform', name: 'idam-client', version: versions.idamClient
   implementation (group: 'uk.gov.hmcts.reform', name: 'core-case-data-store-client', version: versions.ccdStoreClient)
@@ -342,6 +344,8 @@ functional {
       systemProperty 'S2S_SECRET', getVaultSecret('s2s-case-api-secret')
       systemProperty 'IDAM_CASEWORKER_USERNAME', getVaultSecret('idam-caseworker-username')
       systemProperty 'IDAM_CASEWORKER_PASSWORD', getVaultSecret('idam-caseworker-password')
+      systemProperty 'IDAM_CITIZEN_USERNAME', getVaultSecret('idam-citizen-username')
+      systemProperty 'IDAM_CITIZEN_PASSWORD', getVaultSecret('idam-citizen-password')
       systemProperty 'IDAM_SOLICITOR_USERNAME', getVaultSecret('idam-solicitor-username')
       systemProperty 'IDAM_SOLICITOR_PASSWORD', getVaultSecret('idam-solicitor-password')
       systemProperty 'OAUTH2_CLIENT_SECRET', getVaultSecret('idam-secret')

@@ -22,6 +22,10 @@ azure:
   application-insights:
     instrumentation-key: ${APP_INSIGHTS_KEY:00000000-0000-0000-0000-000000000000}
 
+logging:
+  level:
+    uk.gov.hmcts.reform.payments.client.PaymentsApi: DEBUG
+
 uk:
   gov:
     notify:
@@ -73,6 +77,12 @@ idam:
 fee:
   api:
     baseUrl: ${FEE_API_URL:http://fees-register-api-aat.service.core-compute-aat.internal}
+
+payments:
+  api:
+    site_id: AA04
+    service: DIVORCE
+    url: ${PAYMENTS_API_URL:http://payment-api-aat.service.core-compute-aat.internal}
 
 s2s:
   stub: false

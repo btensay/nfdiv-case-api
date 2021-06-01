@@ -35,7 +35,7 @@ public class SolicitorCreateApplicationTest extends FunctionalTestSuite {
         caseData.put(FINANCIAL_ORDER, NO);
         caseData.put("applicant2OrgContactInformation", organisationContactInformation());
 
-        Response response = triggerCallback(caseData, SOLICITOR_CREATE, ABOUT_TO_SUBMIT_URL);
+        Response response = triggerCallbackAsSolicitor(caseData, SOLICITOR_CREATE, ABOUT_TO_SUBMIT_URL);
 
         assertThat(response.getStatusCode()).isEqualTo(OK.value());
 

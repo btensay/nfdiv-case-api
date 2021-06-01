@@ -17,7 +17,7 @@ import static uk.gov.hmcts.divorce.payment.FeesAndPayConstants.SERVICE;
 
 @FeignClient(name = "fees-and-payments-client", url = "${fee.api.baseUrl}")
 @SuppressWarnings("PMD.UseObjectForClearerAPI")
-public interface FeesAndPaymentsClient {
+public interface FeesClient {
 
     @ApiOperation("Returns Application Issue Fee")
     @GetMapping(value = "/fees-register/fees/lookup",

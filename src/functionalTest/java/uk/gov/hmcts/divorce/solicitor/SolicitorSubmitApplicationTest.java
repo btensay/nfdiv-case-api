@@ -44,7 +44,7 @@ public class SolicitorSubmitApplicationTest extends FunctionalTestSuite {
             )
             .build();
 
-        Response response = triggerCallback(request, ABOUT_TO_START_URL);
+        Response response = triggerCallbackAsSolicitor(request, ABOUT_TO_START_URL);
 
         assertThat(response.getStatusCode()).isEqualTo(OK.value());
 
@@ -70,7 +70,7 @@ public class SolicitorSubmitApplicationTest extends FunctionalTestSuite {
             )
             .build();
 
-        final Response response = triggerCallback(request, ABOUT_TO_SUBMIT_URL);
+        final Response response = triggerCallbackAsSolicitor(request, ABOUT_TO_SUBMIT_URL);
 
         assertThat(response.getStatusCode()).isEqualTo(OK.value());
 
