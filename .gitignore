@@ -27,5 +27,8 @@ node_modules/
 *.xlsx
 yarn-error.log
 
+### test output
+functional-output/
+
 ### Generated CCD Json Definition ###
 ccd-definitions/definitions/development
